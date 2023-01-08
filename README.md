@@ -12,3 +12,4 @@ Proyecto creado con el fin de crear un conjunto de **Microservicios** para despu
   - PostgreSQL
   - MySQL
 - Lombok
+- Docker
