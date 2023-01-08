@@ -1,6 +1,8 @@
 package org.tomdep.springcloud.msvc.usuarios.controllers;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +13,13 @@ import org.tomdep.springcloud.msvc.usuarios.services.UsuarioService;
 
 import java.util.*;
 
-@RestController("/api/v1/usuarios")
+@RestController()
+@RequestMapping("/api/v1/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService service;
+
+    private static Logger log = LogManager.getLogger(UsuarioController.class);
 
     @GetMapping
     public List<Usuario> listar() {
@@ -30,7 +35,7 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
         if (result.hasErrors()) {
             return validar(result);
@@ -74,6 +79,11 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/por/curso")
+    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids) {
+        return ResponseEntity.ok(service.listarPorIds(ids));
     }
 
     private static ResponseEntity<Map<String, String>> validar(BindingResult result) {

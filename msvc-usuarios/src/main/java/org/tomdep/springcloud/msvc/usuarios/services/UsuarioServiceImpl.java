@@ -3,6 +3,7 @@ package org.tomdep.springcloud.msvc.usuarios.services;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tomdep.springcloud.msvc.usuarios.clients.CursoClienteRest;
 import org.tomdep.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.tomdep.springcloud.msvc.usuarios.repositories.UsuarioRepository;
 
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private UsuarioRepository repository;
+    @Autowired
+    private CursoClienteRest cliente;
+
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> listar() {
@@ -35,15 +39,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public void eliminar(Long id) {
         repository.deleteById(id);
+        cliente.eliminarCursoUsuarioPorId(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Usuario> porEmail(String email) {
         return repository.porEmail(email);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existePorEmail(String email) {
         return repository.existsByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Usuario> listarPorIds(Iterable<Long> ids) {
+        return (List<Usuario>) repository.findAllById(ids);
     }
 }
