@@ -5,7 +5,7 @@ Proyecto creado con el fin de crear un conjunto de **Microservicios** para despu
 # Tecnologías
 
 - Java JDK 17
-- Springboot 2.7
+- Springboot 3
 - Spring 5
 - Spring Cloud
 - Base de datos:
