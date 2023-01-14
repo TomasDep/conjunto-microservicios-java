@@ -33,6 +33,7 @@ public class Curso {
     public void addCusoUsuario(CursoUsuario cursoUsuario) {
         cursoUsuarios.add(cursoUsuario);
     }
+
     public void removeCursoUsuario(CursoUsuario cursoUsuario) {
         cursoUsuarios.remove(cursoUsuario);
     }

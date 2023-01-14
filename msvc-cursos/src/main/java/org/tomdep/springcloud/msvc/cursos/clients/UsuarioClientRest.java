@@ -13,7 +13,7 @@ public interface UsuarioClientRest {
 
     @GetMapping("/por/curso")
     List<Usuario> obtenerAlumnosPorCurso(@RequestParam Iterable<Long> ids);
+
     @PostMapping
     Usuario crear(@RequestBody Usuario usuario);
-
 }

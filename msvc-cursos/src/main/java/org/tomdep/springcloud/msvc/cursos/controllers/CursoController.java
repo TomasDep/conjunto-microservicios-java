@@ -87,6 +87,7 @@ public class CursoController {
         }
         return ResponseEntity.notFound().build();
     }
+
     @PostMapping("/crear/usuario/{cursoId}")
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
         Optional<Usuario> optional;
