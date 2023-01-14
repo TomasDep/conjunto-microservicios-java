@@ -6,7 +6,6 @@ Proyecto creado con el fin de crear un conjunto de **Microservicios** para despu
 
 - Java JDK 17
 - Springboot 3
-- Spring 5
 - Spring Cloud
 - Base de datos:
   - PostgreSQL
