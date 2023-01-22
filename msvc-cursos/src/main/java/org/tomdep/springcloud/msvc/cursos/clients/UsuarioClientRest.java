@@ -6,7 +6,7 @@ import org.tomdep.springcloud.msvc.cursos.models.Usuario;
 
 import java.util.List;
 
-@FeignClient(name = "msvc-usuarios", url = "localhost:8001/api/v1/usuarios")
+@FeignClient(name = "msvc-usuarios", url = "${msvc.usuarios.url}/api/v1/usuarios")
 public interface UsuarioClientRest {
     @GetMapping("/{id}")
     Usuario detalle(@PathVariable Long id);
