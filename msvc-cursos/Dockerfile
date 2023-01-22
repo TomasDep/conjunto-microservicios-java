@@ -1,25 +1,37 @@
+ARG MSVC_NAME=msvc-cursos
+
 FROM --platform=linux/amd64 amazoncorretto:17.0.5-alpine as builder
 
-WORKDIR /app/msvc-cursos
+ARG MSVC_NAME
+
+WORKDIR /app/$MSVC_NAME
 
 COPY ./pom.xml /app
-COPY ./msvc-cursos/.mvn ./.mvn
-COPY ./msvc-cursos/mvnw .
-COPY ./msvc-cursos/pom.xml .
+COPY ./$MSVC_NAME/.mvn ./.mvn
+COPY ./$MSVC_NAME/mvnw .
+COPY ./$MSVC_NAME/pom.xml .
 
 #   Descarga de dependencias
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 
-COPY ./msvc-cursos/src ./src
+COPY ./$MSVC_NAME/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
 FROM --platform=linux/amd64 amazoncorretto:17.0.5-alpine
 
 WORKDIR /app
+RUN mkdir ./logs
 
-COPY --from=builder /app/msvc-cursos/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
+ARG MSVC_NAME
+ARG TARGET_FOLDER=/app/$MSVC_NAME/target
 
-EXPOSE 8001
+COPY --from=builder $TARGET_FOLDER/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
+
+ARG PORT_APP=8002
+
+ENV PORT $PORT_APP
+
+EXPOSE $PORT
 
 ENTRYPOINT ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
