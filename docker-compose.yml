@@ -30,6 +30,7 @@ services:
 
   msvc-usuarios:
     container_name: msvc-usuarios
+#    image: {USER_DOCKER_HUB}/users:latest
     build:
       context: ./
       dockerfile: ./msvc-usuarios/Dockerfile
@@ -44,6 +45,7 @@ services:
 
   msvc-cursos:
     container_name: msvc-cursos
+#    image: {USER_DOCKER_HUB}/courses:latest
     build:
       context: ./
       dockerfile: ./msvc-cursos/Dockerfile
