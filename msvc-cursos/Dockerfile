@@ -26,7 +26,7 @@ RUN mkdir ./logs
 ARG MSVC_NAME
 ARG TARGET_FOLDER=/app/$MSVC_NAME/target
 
-COPY --from=builder $TARGET_FOLDER/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
+COPY --from=builder $TARGET_FOLDER/msvc-cursos-0.0.1-SNAPSHOT.jar .
 
 ARG PORT_APP=8002
 
