@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  mysql8:
+    container_name: mysql8
+    image: mysql:8
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PWD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+    volumes:
+      - data-mysql:/var/lib/mysql
+    restart: always
+    networks:
+      - spring
+
+  msvc-usuarios:
+    container_name: msvc-usuarios
+    image: ${USER_DOCKER_HUB}/users:latest
+    ports:
+      - "8001:8001"
+    environment:
+      PORT: ${PORT}
+      DB_HOST: ${DB_HOST}
+      DB_DATABASE: ${DB_BD}
+      DB_USERNAME: ${DB_USR}
+      DB_PASSWORD: ${DB_PWD}
+      CURSOS_URL: ${URL_CURSOS}
+    networks:
+      - spring
+    depends_on:
+      - mysql8
+    restart: always
+
+volumes:
+  data-mysql:
+    name: data-mysql
+
+networks:
+  spring:
+    name: spring
